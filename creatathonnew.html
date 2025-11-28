@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ body{text-align:center;font-family:Arial;background:#f0f4ff;margin:0}
+ #login{margin:120px auto;width:260px;padding:20px;background:#fff;border-radius:10px}
+ #login input{width:90%;padding:6px;margin:5px 0}
+ button{padding:7px 15px;border:none;border-radius:5px;color:#fff;cursor:pointer}
+ nav button{margin:5px}
+ .sec{display:none}
+ .active{display:block}
+ .products{display:flex;justify-content:center;gap:20px;margin-top:20px}
+ figure{width:180px;background:#fff;padding:10px;border-radius:10px}
+ #cart{width:260px;margin:20px auto;background:#fffbe6;padding:15px;border-radius:10px}
+ .rm{background:red;padding:2px 6px;border-radius:4px;color:#fff}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login">
+  <h3>Login</h3>
+  <input id="u" placeholder="Username">
+  <input id="p" type="password" placeholder="Password">
+  <button style="background:#2563eb" onclick="log()">Login</button>
+  <p id="err" style="color:red"></p>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+<h1>StyleRack</h1>
+
+<nav>
+ <button style="background:#1d4ed8" onclick="show('men')">Men</button>
+ <button style="background:#db2777" onclick="show('women')">Women</button>
+ <button style="background:#16a34a" onclick="show('kids')">Kids</button>
+</nav>
+
+<!-- MEN -->
+<div id="men" class="sec active">
+ <h2>Men</h2>
+ <div class="products">
+   <figure>
+     <!-- ✔ 100% Working Men Image -->
+     <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" width="160">
+     <figcaption>Men's Casual Shirt – ₹600</figcaption>
+     <button style="background:#16a34a" onclick="add('Men Casual Shirt',600)">Add</button>
+   </figure>
+ </div>
+</div>
+
+<!-- WOMEN -->
+<div id="women" class="sec">
+ <h2>Women</h2>
+ <div class="products">
+   <figure>
+     <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400" width="160">
+     <figcaption>Floral Dress – ₹900</figcaption>
+     <button style="background:#16a34a" onclick="add('Floral Dress',900)">Add</button>
+   </figure>
+ </div>
+</div>
+
+<!-- KIDS -->
+<div id="kids" class="sec">
+ <h2>Kids</h2>
+ <div class="products">
+   <figure>
+     <img src="https://images.unsplash.com/photo-1503457574462-bd27054394c1?w=400" width="160">
+     <figcaption>Kids Outfit – ₹400</figcaption>
+     <button style="background:#16a34a" onclick="add('Kids Outfit',400)">Add</button>
+   </figure>
+ </div>
+</div>
+
+<!-- CART -->
+<div id="cart">
+ <h3>Your Cart</h3>
+ <div id="items">No items</div>
+ <p><b>Total: ₹<span id="t">0</span></b></p>
+</div>
+</div>
+
+<script>
+function log(){
+ if(u.value==""||p.value=="") err.innerHTML="Enter all fields";
+ else{login.style.display="none";app.style.display="block";}
+}
+function show(s){
+ document.querySelectorAll('.sec').forEach(a=>a.classList.remove('active'));
+ document.getElementById(s).classList.add('active');
+}
+let cart=[],total=0;
+function add(n,p){cart.push({n,p});total+=p;render();}
+function removeItem(i){total-=cart[i].p;cart.splice(i,1);render();}
+function render(){
+ if(cart.length==0){items.innerHTML="No items";t.innerHTML=0;return;}
+ items.innerHTML=cart.map((x,i)=>`${x.n} – ₹${x.p} 
+ <button class='rm' onclick='removeItem(${i})'>X</button>`).join("<br>");
+ t.innerHTML=total;
+}
+</script>
+
+</body>
+</html>
